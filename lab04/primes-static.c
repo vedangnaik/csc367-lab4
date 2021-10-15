@@ -31,6 +31,7 @@ static int primes_count(int n, int chunk)
 {
 	int p = 0;
 	//TODO: parallelize using OpenMP, with static scheduling
+	#pragma omp parallel for schedule(static, chunk) reduction(+:p)
 	for (int i = 2; i < n; i++) {
 		if (is_prime(i)) p++;
 	}
