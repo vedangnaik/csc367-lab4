@@ -40,7 +40,12 @@ int main()
 {
 	//TODO: measure time (in milliseconds) taken to execute primes_count()
 	double time_msec = 0.0;
+
+	double start, end;
+	start = omp_get_wtime(); 
 	double result = integral_f(0.0, 100.0);
+	end = omp_get_wtime();
+	time_msec = (end - start) * 1000.0;
 
 	printf("%f\n", result);
 	printf("%f\n", time_msec);

@@ -30,8 +30,9 @@ static double integral_f(double a, double b)
 	assert(a < b);
 
 	double s = 0.0;
-	for (double x = a; x < b; x += step) {
-		s += step * f(x);
+	#pragma omp parallel for reduction (+:s)
+	for (int i = 0; i < (int)((b - a) / step); i++) {
+		s += step * f(a + ((double)i * step));
 	}
 	return s;
 }
@@ -41,7 +42,12 @@ int main()
 {
 	//TODO: measure time (in milliseconds) taken to execute primes_count()
 	double time_msec = 0.0;
+
+	double start, end;
+	start = omp_get_wtime(); 
 	double result = integral_f(0.0, 100.0);
+	end = omp_get_wtime();
+	time_msec = (end - start) * 1000.0;
 
 	printf("%f\n", result);
 	printf("%f\n", time_msec);
