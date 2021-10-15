@@ -48,8 +48,13 @@ int main(int argc, char *argv[])
 	int chunk = atoi(argv[2]);
 
 	//TODO: measure time (in milliseconds) taken to execute primes_count()
-	double time_msec = 0.0;
+	double time_msec = 0.0;	
+
+	double start, end;
+	start = omp_get_wtime(); 
 	int p = primes_count(N, chunk);
+	end = omp_get_wtime();
+	time_msec = (end - start) * 1000.0;
 
 	printf("%d\n", p);
 	printf("%f\n", time_msec);
